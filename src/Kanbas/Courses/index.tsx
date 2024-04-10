@@ -43,7 +43,7 @@ function Courses() {
   }, [courseId]);
 
   //const course = courses.find((course) => course._id === courseId);
-  const isStudentView = screen === "Home" || screen === "Modules";
+  const isStudentView = screen === "Home" || screen === "Modules" || screen == "Quizzes";
 
   return (
     <>
