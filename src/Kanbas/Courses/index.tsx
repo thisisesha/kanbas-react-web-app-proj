@@ -19,6 +19,8 @@ import Grades from "./Grades";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Quiz from "./Quizzes";
+import Quizzes from "./Quizzes";
+import Details from "./Quizzes/QuizEditor/Details";
 
 function Courses() {
   const { courseId } = useParams();
@@ -114,7 +116,7 @@ function Courses() {
             />
             <Route path="Grades" element={<Grades />} />
             <Route path="Zoom Meetings" element={<h1>Zoom Meetings</h1>} />
-            <Route path="Quizzes" element={<Quiz />} />
+            <Route path="Quizzes" element={<Details />} />
             <Route path="People" element={<h1>People</h1>} />
             <Route path="Panopto Video" element={<h1>Panopto Video</h1>} />
             <Route path="Pages" element={<h1>Pages</h1>} />
