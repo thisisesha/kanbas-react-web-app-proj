@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import Nav from "./nav";
 import QuizDetail from "../QuizDetail";
 import QuizQuestion from "./Questions";
@@ -11,10 +11,11 @@ function QuizEditor() {
       </h2>
       <Nav />
       <Routes>
+      <Route path="/" element={<Navigate to="details" />} />
         <Route path="details" element={<QuizDetail />} />
         <Route path="questions" element={<QuizQuestion />} />
       </Routes>
-      <QuizEditor />
+
     </div>
   );
 }
