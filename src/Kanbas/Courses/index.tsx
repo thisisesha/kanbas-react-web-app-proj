@@ -19,6 +19,8 @@ import Grades from "./Grades";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Quiz from "./Quizzes";
+import QuizEditor from "./Quizzes/QuizEditor";
+import QuestionEditor from "./Quizzes/QuizEditor/Questions/QuestionEditor";
 import Quizzes from "./Quizzes";
 import Details from "./Quizzes/QuizEditor/Details";
 
@@ -36,7 +38,6 @@ function Courses() {
 
   const [slash, kanbas, cour, id, screen, assignment] = pathname.split("/");
   const isAssignmentScreen = assignment ? true : false;
-  console.log("ass=",assignment)
   useEffect(() => {
     findCourseById(courseId);
   }, [courseId]);
@@ -117,6 +118,9 @@ function Courses() {
             />
             <Route path="Grades" element={<Grades />} />
             <Route path="Zoom Meetings" element={<h1>Zoom Meetings</h1>} />
+            <Route path="Quizzes" element={<Quiz />} />
+            <Route path="Quizzes/:quizId/*" element={<QuizEditor/>} />
+            <Route path="Quizzes/:quizId/questions/:questionId" element={<QuestionEditor/>} />
 
             <Route path="Quizzes" element={<Details />} />
             <Route path="People" element={<h1>People</h1>} />
