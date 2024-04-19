@@ -33,6 +33,9 @@ function QuizDetail() {
         <TextEditor/>
 
         
+              <br/>
+
+        
        
       
        
@@ -54,6 +57,25 @@ function QuizDetail() {
                   </div>
               </div>
               <br/>
+              <div className="row g-0 text-end">
+                  <div className="col-6 col-md-4" style={{ paddingTop: "5px", paddingRight: "15px" }}>
+                      Points
+                  </div>
+                  <div className="col-sm-6 col-md-8 w-50" style={{ textAlign: "start" }}>
+                  <input
+            className="form-control"
+            type="number"
+            placeholder="Points"
+            aria-label="default input example"
+            //value={assignment?.points}
+            //onChange={(e) =>
+             // dispatch(setAssignment({ ...assignment, points: e.target.value }))
+            //}
+          />
+                  </div>
+              </div>
+              <br/>
+      
 
       <div className="row g-0 text-end" style={{ paddingBottom: "15px" }}>
       <div className="col-6 col-md-4" style={{ paddingTop: "5px", paddingRight: "15px" }}>
@@ -100,7 +122,7 @@ function QuizDetail() {
           </div>
   
           <br/>
-          <input type="checkbox" checked/>
+          <input type="checkbox"/>
           Allow Multiple Attempts 
 
           <br/>
