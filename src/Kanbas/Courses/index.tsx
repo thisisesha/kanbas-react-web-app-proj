@@ -27,7 +27,7 @@ import Details from "./Quizzes/QuizEditor/Details";
 function Courses() {
   const { courseId } = useParams();
   const { pathname } = useLocation();
-  const API_BASE = process.env.REACT_APP_API_BASE;
+  const API_BASE = "http://localhost:4000";
 
   const COURSES_API = `${API_BASE}/api/courses`;
   const [course, setCourse] = useState<any>({ _id: "", number: "" });
@@ -43,7 +43,7 @@ function Courses() {
   }, [courseId]);
 
   //const course = courses.find((course) => course._id === courseId);
-  const isStudentView = screen === "Home" || screen === "Modules";
+  const isStudentView = screen === "Home" || screen === "Modules" || screen == "Quizzes";
 
   return (
     <>
