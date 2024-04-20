@@ -67,7 +67,7 @@ const quizzesSlice = createSlice({
 
     updateQuiz: (state, action) => {
       state.quizzes = state.quizzes.map((quiz) => {
-        if (quiz._id === action.payload._id) {
+        if (quiz.id === action.payload._id) {
           return action.payload;
         } else {
           return quiz;
@@ -77,7 +77,7 @@ const quizzesSlice = createSlice({
 
     deleteQuiz: (state, action) => {
       state.quizzes = state.quizzes.filter(
-        (quiz) => quiz._id !== action.payload
+        (quiz) => quiz.id !== action.payload
       );
     },
 
