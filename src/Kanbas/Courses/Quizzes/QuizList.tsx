@@ -62,7 +62,7 @@ function QuizList() {
                         // onClick={(e) => dispatch(setAssignment(assignment))}
                         style={{ color: "green", textDecoration: "none" }}
                         className="fw-bold ps-0"
-                        to={`/Kanbas/Courses/`}
+                        to="1"
                       >
                         Q1 - HTML
                       </Link>

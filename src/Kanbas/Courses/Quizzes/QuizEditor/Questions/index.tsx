@@ -1,15 +1,14 @@
 import { Button } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import * as client from "./client"; 
 
 function QuizQuestion() {
   const navigate = useNavigate();
   const {quizId, courseId} = useParams();
-  console.log("quizId=",quizId);
-  console.log("quizId=",courseId);
 
-  const addQuestion = () => {
+  const addQuestion = async () => {
     const id = new Date().getTime().toString();
-    console.log(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/questions/${id}`);
+    //await client.createQuestion(quizId, {title: "New Question", _id: id});
     navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/questions/${id}`)
   };
 
