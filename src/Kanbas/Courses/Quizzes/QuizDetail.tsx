@@ -74,18 +74,21 @@ function QuizDetail() {
       <div className="row g-0 text-end" style={{ paddingBottom: "15px" }}>
         <div
           className="col-6 col-md-4"
-          style={{ paddingTop: "5px", paddingRight: "15px" }}
+          style={{ paddingTop: "0.7px", paddingRight: "15px" }}
         >
           <b>Quiz Type</b>
         </div>
-        <div className="col-sm-6 col-md-8 w-50">
-          <select className="form-control mb-2"
+        <div className="col-sm-1 col-md-2">
+       
+          {/* <select className="form-control mb-2"
            onChange={(e) => setQuiz({ ...quiz, quizType: e.target.value })}>
             <option value="GRADED_QUIZ">Graded Quiz</option>
             <option value="PRACTICE_QUIZ">Practice Quiz</option>
             <option value="GRADED_SURVEY">Graded Survey</option>
             <option value="UNGRADED_SURVEY">Ungraded Survey</option>
-          </select>
+          </select> */}
+          {quiz.quizType}
+        
         </div>
       </div>
 
@@ -96,17 +99,8 @@ function QuizDetail() {
         >
           <b>Points</b>
         </div>
-        <div className="col-sm-6 col-md-8 w-50">
-          <input
-            className="form-control"
-            type="number"
-            placeholder="29"
-            aria-label="default input example"
-            // value=
-            onChange={(e) =>
-              dispatch(setQuiz({ ...quiz, points: e.target.value }))
-            }
-          />
+        <div className="col-sm-1 col-md-2">
+          {quiz.points}
         </div>
       </div>
 
@@ -117,16 +111,8 @@ function QuizDetail() {
         >
           <b>Assignment Group</b>
         </div>
-        <div className="col-sm-6 col-md-8 w-50">
-          <select
-            className="form-control mb-2"
-            // onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-          >
-            <option value="QUIZZES">Quizzes</option>
-            <option value="EXAMS">Exams</option>
-            <option value="ASSIGNMENTS">Assignments</option>
-            <option value="PROJECT">Project</option>
-          </select>
+        <div className="col-sm-1 col-md-2">
+          {quiz.assignmentGroup}
         </div>
       </div>
 
@@ -137,15 +123,9 @@ function QuizDetail() {
         >
           <b>Shuffle Answers</b>
         </div>
-        <div className="col-sm-6 col-md-8 w-50">
-          <select
-            className="form-control mb-2"
-            // onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-          >
-            <option value="YES">Yes</option>
-            <option value="NO">No</option>
-          </select>
-        </div>
+        <div className="col-sm-1 col-md-2">
+  {quiz.shuffleAnswers ? 'Yes' : 'No'}
+</div>
       </div>
 
       <div className="row g-0 text-end" style={{ paddingBottom: "15px" }}>
@@ -155,17 +135,8 @@ function QuizDetail() {
         >
           <b>Time Limit</b>
         </div>
-        <div className="col-sm-6 col-md-8 w-50">
-          <input
-            className="form-control"
-            type="number"
-            placeholder="20 Minutes"
-            aria-label="default input example"
-            value="20 Minutes"
-            // onChange={(e) =>
-            //   dispatch(setAssignment({ ...assignment, points: e.target.value }))
-            // }
-          />
+        <div className="col-sm-1 col-md-2">
+          {quiz.timeLimit}
         </div>
       </div>
 
@@ -176,14 +147,8 @@ function QuizDetail() {
         >
           <b>Multiple Attempts</b>
         </div>
-        <div className="col-sm-6 col-md-8 w-50">
-          <select
-            className="form-control mb-2"
-            // onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-          >
-            <option value="NO">No</option>
-            <option value="YES">Yes</option>
-          </select>
+        <div className="col-sm-1 col-md-2">
+        {quiz.multipleAttempts ? 'No' : 'Yes'}
         </div>
       </div>
 
@@ -194,14 +159,8 @@ function QuizDetail() {
         >
           <b>View Responses</b>
         </div>
-        <div className="col-sm-6 col-md-8 w-50">
-          <select
-            className="form-control mb-2"
-            // onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-          >
-            <option value="ALWAYS">Always</option>
-            <option value="NEVER">Never</option>
-          </select>
+        <div className="col-sm-1 col-md-2">
+          Always
         </div>
       </div>
 
@@ -212,14 +171,8 @@ function QuizDetail() {
         >
           <b>Show Correct Answers</b>
         </div>
-        <div className="col-sm-6 col-md-8 w-50">
-          <select
-            className="form-control mb-2"
-            // onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-          >
-            <option value="IMMEDIATELY">Immediately</option>
-            <option value="LATER">Later</option>
-          </select>
+        <div className="col-sm-1 col-md-2">
+          {quiz.correctAnswers ? 'Yes' : 'No'}
         </div>
       </div>
 
@@ -230,14 +183,8 @@ function QuizDetail() {
         >
           <b>One Question at a Time</b>
         </div>
-        <div className="col-sm-6 col-md-8 w-50">
-          <select
-            className="form-control mb-2"
-            // onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-          >
-            <option value="YES">Yes</option>
-            <option value="NO">No</option>
-          </select>
+        <div className="col-sm-1 col-md-2">
+        {quiz.oneQuestion ? 'Yes' : 'No'}
         </div>
       </div>
 
@@ -248,14 +195,8 @@ function QuizDetail() {
         >
           <b>Require Respondus LockDown Browser</b>
         </div>
-        <div className="col-sm-6 col-md-8 w-50">
-          <select
-            className="form-control mb-2"
-            // onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-          >
-            <option value="NO">No</option>
-            <option value="YES">Yes</option>
-          </select>
+        <div className="col-sm-1 col-md-2">
+          No
         </div>
       </div>
 
@@ -266,14 +207,8 @@ function QuizDetail() {
         >
           <b>Required to View Quiz Results</b>
         </div>
-        <div className="col-sm-6 col-md-8 w-50">
-          <select
-            className="form-control mb-2"
-            // onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-          >
-            <option value="NO">No</option>
-            <option value="YES">Yes</option>
-          </select>
+        <div className="col-sm-1 col-md-2">
+          No
         </div>
       </div>
 
@@ -284,14 +219,8 @@ function QuizDetail() {
         >
           <b>Webcam Required</b>
         </div>
-        <div className="col-sm-6 col-md-8 w-50">
-          <select
-            className="form-control mb-2"
-            // onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-          >
-            <option value="NO">No</option>
-            <option value="YES">Yes</option>
-          </select>
+        <div className="col-sm-1 col-md-2">
+        {quiz.oneQuestion ? 'No' : 'Yes'}
         </div>
       </div>
 
@@ -302,14 +231,8 @@ function QuizDetail() {
         >
           <b>Lock Questions After Answering</b>
         </div>
-        <div className="col-sm-6 col-md-8 w-50">
-          <select
-            className="form-control mb-2"
-            // onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-          >
-            <option value="NO">No</option>
-            <option value="YES">Yes</option>
-          </select>
+        <div className="col-sm-1 col-md-2">
+        {quiz.lockQuestion ? 'No' : 'Yes'}
         </div>
       </div>
       <table className="table">
@@ -323,7 +246,7 @@ function QuizDetail() {
         </thead>
         <tbody>
           <tr>
-            <td>{quiz.dueDate}</td>
+            <td>{quiz.dueDate} </td>
             <td>Everyone</td>
             <td>{quiz.availableFromDate}</td>
             <td>{quiz.availableUntilDate}</td>
