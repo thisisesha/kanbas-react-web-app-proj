@@ -33,6 +33,7 @@ const initialState = {
   quiz: {
     title: "Unnamed Quiz",
     availability: "",
+    description:"",
     numberOfQuestions: "",
     id: "-1",
     points: "100",
