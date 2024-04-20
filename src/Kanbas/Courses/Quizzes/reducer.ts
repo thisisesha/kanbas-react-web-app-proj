@@ -1,14 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
 interface Quiz {
   title: string;
+  description: string;
   availability: string;
   points: string;
   dueDate: string;
   _id: string;
+  quizType: string;
+  assignmentGroup: string;
+
+  
+    shuffleAnswers:boolean;
+    timeLimit: String;
+    multipleAttempts: boolean;
+    correctAnswers: boolean;
+    oneQuestion: boolean;
+    webcam: boolean;
+    lockQuestion: boolean;
+  
+
+  accessCode:String;
+ 
+
   numberOfQuestions: string;
   availableFromDate: string;
   availableUntilDate: string;
   course: String;
+
 }
 const initialState = {
   quizzes: [] as Quiz[],
@@ -18,6 +36,18 @@ const initialState = {
     numberOfQuestions: "",
     _id: "-1",
     points: "100",
+    quizType: "Graded Quiz",
+    assignmentGroup: "Quizzes",
+    
+      shuffleAnswers:true,
+      timeLimit: "20",
+      multipleAttempts: false,
+      correctAnswers: true,
+      oneQuestion: true,
+      webcam: false,
+      lockQuestion: false,
+    
+    accessCode:"",
     dueDate: new Date().toISOString().slice(0, 16),
     availableFromDate: new Date().toISOString().slice(0, 16),
     availableUntilDate: new Date().toISOString().slice(0, 16),
