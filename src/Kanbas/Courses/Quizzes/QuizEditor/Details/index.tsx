@@ -76,12 +76,12 @@ function QuizDetail() {
                       Quiz Type
                   </div>
                   <div className="col-sm-6 col-md-8 w-50" style={{ textAlign: "start" }}>
-                  <select className="form-control form-select" onChange={(e) => {
+                  <select value={quiz.quizType} className="form-control form-select" onChange={(e) => {
           dispatch(
             setQuiz({ ...quiz, quizType: e.target.value })
           );
         }}>
-                          <option selected>Graded Quiz</option>
+                          <option>Graded Quiz</option>
                           <option>Practice Quiz</option>
                           <option>Graded Survey</option>
                           <option>Practice Survey</option>
@@ -114,12 +114,12 @@ function QuizDetail() {
           Assignment Group
       </div>
       <div className="col-sm-6 col-md-8 w-50" style={{ textAlign: "start" }}>
-      <select className="form-control form-select" onChange={(e) => {
+      <select  value={quiz.assignmentGroup} className="form-control form-select" onChange={(e) => {
           dispatch(
             setQuiz({ ...quiz, assignmentGroup: e.target.value })
           );
         }}>
-      <option selected>Quizzes</option>
+      <option>Quizzes</option>
                           <option>Exams</option>
                           <option>Assignments</option>
                           <option> Project</option>
