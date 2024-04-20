@@ -8,14 +8,52 @@ import {
     setQuiz
   } from "../../reducer";
 import Quiz from "../..";
+import { useEffect } from "react";
 
 function QuizDetail() {
-    //const { quizId } = useParams();
+    const { quizId } = useParams();
+    const dispatch = useDispatch();
+    const quizList = useSelector((state: KanbasState) =>
+        state.quizReducer.quizzes);
     const quiz = useSelector(
         (state: KanbasState) => state.quizReducer.quiz
       );
 
-      const dispatch = useDispatch();
+      useEffect(() => {
+        const quizDataMain = quizList.find((q) => q._id === quizId);
+        const quizData = { ...quizDataMain };
+            if (
+                quizData.availableFromDate &&
+                quizData.availableFromDate !== ""
+              ) {
+        
+                quizData.availableFromDate = new Date(
+                  quizData.availableFromDate
+                )
+                  .toISOString()
+                  .split("T")[0];
+              }
+              if (
+                quizData.availableUntilDate &&
+                quizData.availableUntilDate !== ""
+              ) {
+                quizData.availableUntilDate = new Date(
+                  quizData.availableUntilDate
+                )
+                  .toISOString()
+                  .split("T")[0];
+              }
+              if (quizData.dueDate && quizData.dueDate !== "") {
+                quizData.dueDate = new Date(quizData.dueDate)
+                  .toISOString()
+                  .split("T")[0];
+              } 
+          dispatch(setQuiz(quizData));
+        }, [dispatch, quizId]);
+
+      
+
+    
 
 
   //   const assignment = assignments.find(
