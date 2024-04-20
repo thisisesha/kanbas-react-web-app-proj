@@ -4,11 +4,12 @@ interface Quiz {
   availability: string;
   points: string;
   dueDate: string;
-  id: string;
+  _id: string;
   numberOfQuestions: string;
   availableFromDate: string;
   availableUntilDate: string;
   course: String;
+  published: Boolean;
 }
 const initialState = {
   quizzes: [] as Quiz[],
@@ -16,12 +17,13 @@ const initialState = {
     title: "Unnamed Quiz",
     availability: "",
     numberOfQuestions: "",
-    id: "-1",
+    _id: "-1",
     points: "100",
     dueDate: new Date().toISOString().slice(0, 16).split("T")[0],
     availableFromDate: new Date().toISOString().slice(0, 16).split("T")[0],
     availableUntilDate: new Date().toISOString().slice(0, 16).split("T")[0],
     course: "-1",
+    published: false
   },
 };
 const quizzesSlice = createSlice({
@@ -35,7 +37,7 @@ const quizzesSlice = createSlice({
 
     updateQuiz: (state, action) => {
       state.quizzes = state.quizzes.map((quiz) => {
-        if (quiz.id === action.payload._id) {
+        if (quiz._id === action.payload._id) {
           return action.payload;
         } else {
           return quiz;
@@ -45,7 +47,7 @@ const quizzesSlice = createSlice({
 
     deleteQuiz: (state, action) => {
       state.quizzes = state.quizzes.filter(
-        (quiz) => quiz.id !== action.payload
+        (quiz) => quiz._id !== action.payload
       );
     },
 

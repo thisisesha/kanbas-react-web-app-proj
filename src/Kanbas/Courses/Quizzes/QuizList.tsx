@@ -6,6 +6,7 @@ import {
   FaPlus,
   FaCaretDown,
   FaRocket,
+  FaBan,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router";
@@ -25,6 +26,9 @@ function QuizList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { courseId } = useParams();
+
+  const [menuVisible, setMenuVisible] = useState(false);
+  /// const [published, setPublished] = useState(false); // State to track the published status
 
   const navigateToAddQuiz = () => {
     dispatch(clearQuiz());
@@ -49,6 +53,27 @@ function QuizList() {
   const handleDeleteQuiz = async (quizId: string) => {
     const res = await client.deleteQuiz(quizId);
     dispatch(deleteQuiz(quizId));
+  };
+
+  const handleEditQuiz = () => {
+    console.log("Navigating to Quiz Details screen");
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/QuizEditor`);
+  };
+
+  const handleTogglePublish = (qz:any) => {
+    // Toggle the published status
+    dispatch(
+      updateQuiz({
+        ...qz,
+        published: !qz.published,
+      })
+    );
+    console.log("Publishing or Unpublishing the quiz");
+    console.log(qz.published);
+  };
+
+  const toggleMenu = () => {
+    setMenuVisible((prev) => !prev);
   };
 
   useEffect(() => {
@@ -128,14 +153,49 @@ function QuizList() {
                     className="col-auto"
                     style={{ margin: "auto", display: "flex" }}
                   >
-                    <FaCheckCircle
-                      className="ms-4"
-                      style={{ color: "green" }}
-                    />
-                    <FaEllipsisV
-                      className="ms-4"
-                      style={{ verticalAlign: "middle" }}
-                    />
+                    {quiz.published ? (
+                      <FaCheckCircle
+                        className="ms-4"
+                        style={{ color: "green", cursor: "pointer", verticalAlign: "middle" }}
+                        onClick={() => handleTogglePublish(quiz)}
+                      />
+                    ) : (
+                      <FaBan
+                        className="ms-4"
+                        style={{ color: "red", cursor: "pointer", verticalAlign: "middle" }}
+                        onClick={() => handleTogglePublish(quiz)}
+                      />
+                    )}
+
+                    <a>
+                      <FaEllipsisV
+                        className="ms-4"
+                        role="button"
+                        style={{ verticalAlign: "middle" }}
+                        onClick={toggleMenu}
+                      />
+                    </a>
+                    {menuVisible && (
+                      <div
+                        className="menu"
+                        onChange={() => setMenuVisible(false)}
+                      >
+                        <option onClick={handleEditQuiz}>Edit</option>
+                        <option
+                          onClick={() => {
+                            if (handleDelete()) {
+                              handleDeleteQuiz(quiz._id);
+                            }
+                          }}
+                        >
+                          Delete
+                        </option>
+                        <option onClick={()=>handleTogglePublish(quiz)}>
+                          {quiz.published ? "Unpublish" : "Publish"}{" "}
+                          {/* Toggle the description based on the published status */}
+                        </option>
+                      </div>
+                    )}
                   </div>
                 </div>
               </li>

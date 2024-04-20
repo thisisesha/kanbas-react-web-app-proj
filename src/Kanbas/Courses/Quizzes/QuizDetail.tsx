@@ -1,8 +1,30 @@
-import { FaCheckCircle, FaEllipsisV, FaPencilAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaCheckCircle, FaEllipsisV, FaPencilAlt, FaBan } from "react-icons/fa";
+import { Link, useParams } from "react-router-dom";
 import "./index.css";
+import { useDispatch, useSelector } from "react-redux";
+import { KanbasState } from "../../store";
+import { setQuiz } from "./reducer";
+import { useState } from "react";
 
 function QuizDetail() {
+  const { courseId } = useParams();
+  const { quizId } = useParams();
+  const [published, setPublished] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const quiz = useSelector((state: KanbasState) => state.quizReducer.quiz);
+
+  const quizList = useSelector(
+    (state: KanbasState) => state.quizReducer.quizzes
+  );
+
+  const handleTogglePublish = () => {
+    // Toggle the published status
+    setPublished((prevPublished) => !prevPublished);
+    console.log("Publishing or Unpublishing the quiz");
+  };
+
   return (
     <div className="flex-fill">
       <div className="d-flex justify-content-end">
@@ -10,13 +32,14 @@ function QuizDetail() {
           to={"#"}
           style={{ backgroundColor: "green", color: "white" }}
           className="btn btn-secondary btn-md ps-2 ms-2"
+          onClick={handleTogglePublish}
         >
-          <FaCheckCircle />
-          Published
+          {quiz.published ? "Unpublish" : "Publish"}{" "}
+          {quiz.published ? <FaBan /> : <FaCheckCircle />}
         </Link>
 
         <Link
-          to={"#"}
+          to={`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/QuizPreview`}
           style={{ backgroundColor: "#d3d3d3", color: "black" }}
           className="btn btn-secondary btn-md ps-2 ms-2"
         >
@@ -24,7 +47,7 @@ function QuizDetail() {
         </Link>
 
         <Link
-          to={"#"}
+          to={`/Kanbas/Courses/${courseId}/Quizzes/QuizEditor`}
           style={{ backgroundColor: "#d3d3d3", color: "black" }}
           className="btn btn-secondary btn-md ps-2 ms-2"
           role="button"
@@ -45,7 +68,7 @@ function QuizDetail() {
 
       <hr></hr>
       <div className="d-flex justofy-content-start">
-        <h2>Q1 - HTML</h2>
+        <h2>{quiz.title}</h2>
       </div>
 
       <div className="row g-0 text-end" style={{ paddingBottom: "15px" }}>
@@ -56,10 +79,8 @@ function QuizDetail() {
           <b>Quiz Type</b>
         </div>
         <div className="col-sm-6 col-md-8 w-50">
-          <select
-            className="form-control mb-2"
-            // onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-          >
+          <select className="form-control mb-2"
+           onChange={(e) => setQuiz({ ...quiz, quizType: e.target.value })}>
             <option value="GRADED_QUIZ">Graded Quiz</option>
             <option value="PRACTICE_QUIZ">Practice Quiz</option>
             <option value="GRADED_SURVEY">Graded Survey</option>
@@ -81,10 +102,10 @@ function QuizDetail() {
             type="number"
             placeholder="29"
             aria-label="default input example"
-            value="29"
-            // onChange={(e) =>
-            //   dispatch(setAssignment({ ...assignment, points: e.target.value }))
-            // }
+            // value=
+            onChange={(e) =>
+              dispatch(setQuiz({ ...quiz, points: e.target.value }))
+            }
           />
         </div>
       </div>
@@ -302,10 +323,10 @@ function QuizDetail() {
         </thead>
         <tbody>
           <tr>
-            <td>Sep 21 at 1pm</td>
+            <td>{quiz.dueDate}</td>
             <td>Everyone</td>
-            <td>Sep 21 at 11:40am</td>
-            <td>Sep 21 at 1pm</td>
+            <td>{quiz.availableFromDate}</td>
+            <td>{quiz.availableUntilDate}</td>
           </tr>
         </tbody>
       </table>
