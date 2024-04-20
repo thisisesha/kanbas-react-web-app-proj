@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import {
   FaCheckCircle,
@@ -7,7 +8,26 @@ import {
   FaCaretDown,
   FaRocket,
 } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaEllipsisV,
+  FaPlus,
+  FaCaretDown,
+  FaRocket,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
+import * as client from "./client";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addQuiz,
+  updateQuiz,
+  deleteQuiz,
+  clearQuiz,
+  setQuiz,
+  setQuizzes,
+} from "./reducer";
+import { KanbasState } from "./../../store";
 import { useNavigate, useParams } from "react-router";
 import * as client from "./client";
 import { useSelector, useDispatch } from "react-redux";
@@ -76,7 +96,71 @@ function QuizList() {
               Quiz
             </Button>{" "}
           </div>
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { courseId } = useParams();
 
+  const navigateToAddQuiz = () => {
+    dispatch(clearQuiz());
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/QuizEditor`);
+  };
+
+  const handleDelete = () => {
+    const result = window.confirm("Are you sure you want to delete this Quiz?");
+    if (result) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const quiz = useSelector((state: KanbasState) => state.quizReducer.quiz);
+
+  const quizList = useSelector(
+    (state: KanbasState) => state.quizReducer.quizzes
+  );
+
+  const handleDeleteQuiz = async (quizId: string) => {
+    const res = await client.deleteQuiz(quizId);
+    dispatch(deleteQuiz(quizId));
+  };
+
+  useEffect(() => {
+    client.findQuizForCourse(courseId).then((quizzes) => {
+      dispatch(setQuizzes(quizzes));
+    });
+  }, [courseId]);
+
+  return (
+    <div className="col me-2">
+      <div className="row wd-margin-top">
+        <div className="float-end wd-margin-right">
+          <div className="wd-button float-end">
+            <a
+              className="btn btn-secondary btn-sm ms-2"
+              role="button"
+              style={{ backgroundColor: "lightgray" }}
+            >
+              <FaEllipsisV />
+            </a>
+          </div>
+          <div className="wd-button float-end">
+            <Button variant="danger btn-sm" onClick={navigateToAddQuiz}>
+              <FaPlus className="me-1" />
+              Quiz
+            </Button>{" "}
+          </div>
+
+          <div className="float-start w-25">
+            <input
+              className="form-control"
+              id="input1"
+              placeholder="Search for Quiz"
+            />
+          </div>
+        </div>
+      </div>
+      <hr></hr>
           <div className="float-start w-25">
             <input
               className="form-control"
