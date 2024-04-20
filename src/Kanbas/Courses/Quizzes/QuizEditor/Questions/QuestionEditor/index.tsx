@@ -6,19 +6,33 @@ import TrueFalse from "./TrueFalse";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { setQuestions, setQuestion, addOption } from "../reducer";
+import { KanbasState } from "../../../../../store";
 
 function QuestionEditor() {
-  const val = 20;
-
+  
+  const dispatch = useDispatch();
   const [questionType, setQuestionType] = useState("MultipleChoice");
   const [currentQuestionType, setCurrentQuestionType] = useState(<></>);
 
+  const question = useSelector(
+    (state: KanbasState) => state.questionsReducer.question
+  );
+
   useEffect(() => {
+    //setQuestionType(question.type);
     checkType();
   }, [questionType]);
 
+
+  useEffect(() => {
+    console.log("Question Updated", question);
+    setQuestionType(question.type);
+    checkType();
+  }, []);
+
   const checkType = () => {
-    console.log("Check  ", questionType);
     let temp = <></>;
     if (questionType.includes("MultipleChoice")) {
       temp = <MultipleChoiceQuestion />;
@@ -34,12 +48,23 @@ function QuestionEditor() {
   return (
     <div>
       <div className="col">
-        <input className="form" type="text" placeholder="Question Name" />
+        <input
+          className="form"
+          type="text"
+          placeholder="Question Name"
+          value={question.title}
+          onChange={(e) => {
+            dispatch(setQuestion({ ...question, title: e.target.value }));
+          }}
+        />
         <select
           className="form"
           value={questionType}
           onChange={(e) => {
+            console.log("Hello");
             setQuestionType(e.target.value);
+            dispatch(setQuestion({ ...question, type: e.target.value }));
+            dispatch(setQuestion({ ...question, options: [] }));
           }}
         >
           <option value="MultipleChoice">Multiple Choice</option>
@@ -52,7 +77,8 @@ function QuestionEditor() {
         >
           pts:
           <input
-            value={val}
+            value={question.points}
+            onChange={(e) => {dispatch(setQuestion({ ...question, points: e.target.value }))}}
             className="form ms-1"
             style={{ width: "50px" }}
             type="number"
@@ -70,13 +96,12 @@ function QuestionEditor() {
       <h2>Question:</h2>
       <TextBox />
       {currentQuestionType}
-      <div  className="float-end me-2" >
+      <div className="float-end me-2">
+        <Button type="button" onClick={()=>dispatch(addOption())} style={{ color: "red", textDecoration: "none" }} className="btn btn-link">
+
         <FaPlus className="me-2" style={{ color: "red" }} />
-        <a
-          style={{ color: "red", textDecoration: "none" }}
-        >
           Add Another Answer
-        </a>
+        </Button>
       </div>
 
       <br />

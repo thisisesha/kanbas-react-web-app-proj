@@ -6,12 +6,13 @@ interface Option {
 }
 
 interface Question {
-  id: string;
+  _id: string;
   title: string;
   points: number;
   question: string;
+  type:'MultipleChoice'|'TrueFalse'|'FillBlank';
   options: string[];
-}
+} 
 
 const initialState = {
   questions: [] as Question[],
@@ -19,6 +20,7 @@ const initialState = {
     title: "New Question",
     points: 0,
     question: "",
+    type: "MultipleChoice",
     options: [] as Option[],
   },
 };
@@ -33,12 +35,12 @@ const questionsSlice = createSlice({
 
     deleteQuestion: (state, action) => {
       state.questions = state.questions.filter(
-        (question) => question.id !== action.payload
+        (question) => question._id !== action.payload
       );
     },
     updateQuestion: (state, action) => {
       state.questions = state.questions.map((question) => {
-        if (question.id === action.payload.id) {
+        if (question._id === action.payload.id) {
           return action.payload;
         } else {
           return question;
@@ -53,8 +55,13 @@ const questionsSlice = createSlice({
       state.question = action.payload;
     },
 
-    addOption: (state, action) => {
-      state.question.options = [...state.question.options, action.payload];
+    resetQuestion: (state) => {
+      state.question = initialState.question;
+    },
+
+    addOption: (state) => {
+      const temp = {id: new Date().getTime().toString(), option: "Empty Option"};
+      state.question.options = [...state.question.options, temp];
     },
 
     updateOption: (state, action) => {
@@ -84,5 +91,6 @@ export const {
   addOption,
   updateOption,
   deleteOption,
+  resetQuestion,
 } = questionsSlice.actions;
 export default questionsSlice.reducer;

@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 function QuizEditor() {
   const { quizId } = useParams();
 
-  console.log("quizfdfdId=", quizId);
   return (
     <div>
       <h2>Hello</h2>

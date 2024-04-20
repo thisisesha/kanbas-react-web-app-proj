@@ -1,32 +1,30 @@
 import { BsTrash3Fill } from "react-icons/bs";
+import { useSelector } from "react-redux";
+import { KanbasState } from "../../../../../store";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { updateOption, deleteOption } from "../reducer";
 
 function FillInTheBlank() {
-    let arr = [
-        {
-            id: 1,
-            text: "Option 1",
-          },
-          {
-            id: 2,
-            text: "Option 2",
-          },
-          {
-            id: 3,
-            text: "Option 3",
-          },
-    ]
+    const dispatch = useDispatch();
 
 
-    const deleteOption = (id: number) => {
-      console.log("delete option", id);
+    const question = useSelector(
+      (state: KanbasState) => state.questionsReducer.question
+    );
+
+    const deleteOpt = (id: number) => {
+      dispatch(deleteOption(id));
     };
+
+    console.log("Fill in the", question);
   return (
     <div>
-        {arr.map((option) => (
+        {question.options?.map((option : any) => (
             <div key={option.id}>
                 <label>Possible Answer</label>
-                <input type="text" value={option.text}/>
-                <button className="btn"  onClick={() => deleteOption(option.id)}>
+                <input className="ms-2" type="text" value={option.option} onChange={(e)=>dispatch(updateOption({...option,option:e.target.value}))}/>
+                <button className="btn"  onClick={() => deleteOpt(option.id)}>
                 <BsTrash3Fill />
               </button> 
             </div>

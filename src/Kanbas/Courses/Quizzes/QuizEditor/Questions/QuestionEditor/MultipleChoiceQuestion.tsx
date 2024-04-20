@@ -16,7 +16,7 @@ const options = [
 ];
 
 function MultipleChoiceQuestion() {
-
+  console.log("Options", options);
   const deleteOption = (id: number) => {
     console.log("delete option", id);
   };
