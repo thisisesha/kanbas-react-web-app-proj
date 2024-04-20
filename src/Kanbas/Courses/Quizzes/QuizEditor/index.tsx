@@ -14,6 +14,7 @@ import {
 } from "../reducer";
 import Quiz from "../..";
 import * as client from "../client";
+import { Button } from "react-bootstrap";
 
 
 function QuizEditor() {
@@ -28,13 +29,15 @@ function QuizEditor() {
     const handleSave = () => {
         console.log("Actually saving assignment TBD in later assignments");
         handleUpdate();
-        //navigate(`/Kanbas/Courses/${courseId}/Quizzes`);
+        navigate(`/Kanbas/Courses/${courseId}/quizzes`);
+        
+        
       };
 
       const handleSaveAndPublish = () => {
         console.log("Actually saving assignment TBD in later assignments");
         handleAddingNew();
-        //navigate(`/Kanbas/Courses/${courseId}/Assignments`);
+        navigate(`/Kanbas/Courses/${courseId}/quizzes`);
       };
 
     const dispatch = useDispatch();
@@ -75,22 +78,22 @@ function QuizEditor() {
           
         
         
-            <Link to={`/Kanbas/Courses/${courseId}/Quizzes/QuizList`}
+            <Link to={`/Kanbas/Courses/${courseId}/quizzes`}
                onClick={(e) => dispatch(clearQuiz())}
               className="btn me-2" style={{ height: "fit-content", backgroundColor: "#E0E0E0" }}
             >
               Cancel
             </Link>
-            <Link to={`/Kanbas/Courses/${courseId}/Quizzes/QuizList`}
+            <Link to={`/Kanbas/Courses/${courseId}/quizzes`}
               onClick={handleSaveAndPublish}
               className="btn me-2" style={{ height: "fit-content", backgroundColor: "#E0E0E0" }}
             >
               Save and Publish
             </Link>
 
-           <Link to={`/Kanbas/Courses/${courseId}/Quizzes/QuizList`} className="btn btn-danger" style={{ marginRight: "5px" }}  onClick={handleSave}>
+           <Button className="btn btn-danger" style={{ marginRight: "5px" }}  onClick={handleSave}>
   Save
-</Link>
+</Button>
           </span>
         </div>
 
