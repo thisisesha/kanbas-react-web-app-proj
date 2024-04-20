@@ -28,14 +28,12 @@ function QuizDetail() {
 
 
 
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
+    return (
+        
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      
+            
+
       <div>
            
       <div id="editor">
@@ -329,11 +327,15 @@ function QuizDetail() {
                       </div>
                   </div>
               </div>
-            </div>
-          </div>
+        
+  
+  
+        
+        
         </div>
       </div>
-    </div>
-  );
-}
-export default QuizDetail;
+      </div>
+  
+    );
+  }
+  export default QuizDetail;
