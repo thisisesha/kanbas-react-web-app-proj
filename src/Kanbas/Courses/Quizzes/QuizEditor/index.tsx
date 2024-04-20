@@ -56,7 +56,6 @@ function QuizEditor() {
 
 
 
-  console.log("quizfdfdId=", quizId);
   return (
     <div>
       <h2>Hello</h2>

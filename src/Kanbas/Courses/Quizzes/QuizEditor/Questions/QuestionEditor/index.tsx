@@ -1,35 +1,90 @@
+import { useEffect, useState } from "react";
 import TextBox from "../../../../../Common/TextBox";
-
-function SelectionBar() {
-  const val = 20;
-  return (
-    <div className="col">
-      <input className="form" type="text" placeholder="Question Name" />
-      <select className="form">
-        <option value="MultipleChoice">Multiple Choice</option>
-        <option value="TrueFalse">True/False</option>
-        <option value="FillBlank">Fill in the Blank</option>
-      </select>
-      <span
-        className="float-end"
-        style={{ fontSize: "20px", fontWeight: "bold" }}
-      >
-        pts:
-        <input
-          value={val}
-          className="form ms-1"
-          style={{ width: "50px" }}
-          type="number"
-        />
-      </span>
-    </div>
-  );
-}
+import MultipleChoiceQuestion from "./MultipleChoiceQuestion";
+import FillInTheBlank from "./FillInTheBlank";
+import TrueFalse from "./TrueFalse";
+import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { setQuestions, setQuestion, addOption } from "../reducer";
+import { KanbasState } from "../../../../../store";
 
 function QuestionEditor() {
+  
+  const dispatch = useDispatch();
+  const [questionType, setQuestionType] = useState("MultipleChoice");
+  const [currentQuestionType, setCurrentQuestionType] = useState(<></>);
+
+  const question = useSelector(
+    (state: KanbasState) => state.questionsReducer.question
+  );
+
+  useEffect(() => {
+    //setQuestionType(question.type);
+    checkType();
+  }, [questionType]);
+
+
+  useEffect(() => {
+    console.log("Question Updated", question);
+    setQuestionType(question.type);
+    checkType();
+  }, []);
+
+  const checkType = () => {
+    let temp = <></>;
+    if (questionType.includes("MultipleChoice")) {
+      temp = <MultipleChoiceQuestion />;
+    } else if (questionType.includes("TrueFalse")) {
+      temp = <TrueFalse />;
+    } else {
+      console.log("Fill in the Blank Question");
+      temp = <FillInTheBlank />;
+    }
+    setCurrentQuestionType(temp);
+  };
+
   return (
     <div>
-      <SelectionBar />
+      <div className="col">
+        <input
+          className="form"
+          type="text"
+          placeholder="Question Name"
+          value={question.title}
+          onChange={(e) => {
+            dispatch(setQuestion({ ...question, title: e.target.value }));
+          }}
+        />
+        <select
+          className="form"
+          value={questionType}
+          onChange={(e) => {
+            console.log("Hello");
+            setQuestionType(e.target.value);
+            dispatch(setQuestion({ ...question, type: e.target.value }));
+            dispatch(setQuestion({ ...question, options: [] }));
+          }}
+        >
+          <option value="MultipleChoice">Multiple Choice</option>
+          <option value="TrueFalse">True/False</option>
+          <option value="FillBlank">Fill in the Blank</option>
+        </select>
+        <span
+          className="float-end"
+          style={{ fontSize: "20px", fontWeight: "bold" }}
+        >
+          pts:
+          <input
+            value={question.points}
+            onChange={(e) => {dispatch(setQuestion({ ...question, points: e.target.value }))}}
+            className="form ms-1"
+            style={{ width: "50px" }}
+            type="number"
+          />
+        </span>
+      </div>
       <hr />
       <p>
         Enter your question text, then define all possible correct answers for
@@ -40,6 +95,18 @@ function QuestionEditor() {
       </p>
       <h2>Question:</h2>
       <TextBox />
+      {currentQuestionType}
+      <div className="float-end me-2">
+        <Button type="button" onClick={()=>dispatch(addOption())} style={{ color: "red", textDecoration: "none" }} className="btn btn-link">
+
+        <FaPlus className="me-2" style={{ color: "red" }} />
+          Add Another Answer
+        </Button>
+      </div>
+
+      <br />
+      <Button className="btn btn-secondary">Cancel</Button>
+      <Button className="btn btn-danger ms-2">Update Question</Button>
     </div>
   );
 }
