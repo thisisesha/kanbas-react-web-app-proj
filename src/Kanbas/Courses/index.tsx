@@ -38,8 +38,18 @@ function Courses() {
     setCourse(response.data);
   };
 
-  const [slash, kanbas, cour, id, screen, assignment] = pathname.split("/");
-  const isAssignmentScreen = assignment ? true : false;
+  const [slash, kanbas, cour, id, screen, p, quiz] = pathname.split("/");
+  console.log(pathname);
+  let isAssignmentScreen = false;
+  let isQuizScreen = false;
+  if (screen === 'Assignments') {
+    isAssignmentScreen = p ? true : false;
+  }
+  if (screen === 'Quizzes') {
+    isQuizScreen = p ? true : false;
+  }
+  
+  //const isQuizScreen = quiz ? true : false;
   useEffect(() => {
     findCourseById(courseId);
   }, [courseId]);
@@ -71,30 +81,47 @@ function Courses() {
                   {course?.number}{" "}
                 </Link>
               </li>
-              {!isAssignmentScreen ? (
-                <li className="breadcrumb-item active wd-top-bar-text">
-                  {decodeURIComponent(screen)}
-                </li>
-              ) : (
-                <>
-                  <li className="breadcrumb-item wd-top-bar">
-                    <Link
-                      style={{
-                        marginTop: "3px",
-                        marginLeft: "2px",
-                        textDecoration: "none",
-                        paddingTop: "10px",
-                        color: "red",
-                      }}
-                      to={`/Kanbas/Courses/${courseId}/Assignments`}
-                    >
-                      Assignments{" "}
-                    </Link>
-                  </li>
-
-                  <li className="breadcrumb-item wd-top-bar">{assignment}</li>
-                </>
-              )}
+              {isAssignmentScreen ? (
+      <>
+        <li className="breadcrumb-item wd-top-bar">
+          <Link
+            style={{
+              marginTop: "3px",
+              marginLeft: "2px",
+              textDecoration: "none",
+              paddingTop: "10px",
+              color: "red",
+            }}
+            to={`/Kanbas/Courses/${courseId}/Assignments`}
+          >
+            Assignments{" "}
+          </Link>
+        </li>
+        <li className="breadcrumb-item wd-top-bar">{p}</li>
+      </>
+    ) : isQuizScreen ? (
+      <>
+        <li className="breadcrumb-item wd-top-bar">
+          <Link
+            style={{
+              marginTop: "3px",
+              marginLeft: "2px",
+              textDecoration: "none",
+              paddingTop: "10px",
+              color: "red",
+            }}
+            to={`/Kanbas/Courses/${courseId}/Quizzes`}
+          >
+            Quizzes{" "}
+          </Link>
+        </li>
+        <li className="breadcrumb-item wd-top-bar">{p}</li>
+      </>
+    ) : (
+      <li className="breadcrumb-item active wd-top-bar-text">
+        {decodeURIComponent(screen)}
+      </li>
+    )}
             </ol>
           </nav>
         </div>

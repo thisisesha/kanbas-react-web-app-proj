@@ -55,46 +55,46 @@ function QuestionEditor() {
 
   return (
     <div>
-      <div className="col">
-        <input
-          className="form"
-          type="text"
-          placeholder="Question Name"
-          value={question.title}
-          onChange={(e) => {
-            dispatch(setQuestion({ ...question, title: e.target.value }));
-          }}
-        />
-        <select
-          className="form"
-          value={questionType}
-          onChange={(e) => {
-            console.log("Hello");
-            setQuestionType(e.target.value);
-            dispatch(setQuestion({ ...question, type: e.target.value }));
-            dispatch(setQuestion({ ...question, options: [] }));
-          }}
-        >
-          <option value="MultipleChoice">Multiple Choice</option>
-          <option value="TrueFalse">True/False</option>
-          <option value="FillBlank">Fill in the Blank</option>
-        </select>
-        <span
-          className="float-end"
-          style={{ fontSize: "20px", fontWeight: "bold" }}
-        >
-          pts:
-          <input
-            value={question.points}
-            onChange={(e) => {
-              dispatch(setQuestion({ ...question, points: e.target.value }));
-            }}
-            className="form ms-1"
-            style={{ width: "50px" }}
-            type="number"
-          />
-        </span>
-      </div>
+      <div className="col d-flex align-items-center">
+  <input
+    className="form-control me-2"
+    type="text"
+    placeholder="Question Name"
+    style={{ width: "200px" }}
+    value={question.title}
+    onChange={(e) => {
+      dispatch(setQuestion({ ...question, title: e.target.value }));
+    }}
+  />
+  <select
+    className="form-control me-2"
+    value={questionType}
+    style={{ width: "200px" }}
+    onChange={(e) => {
+      console.log("Hello");
+      setQuestionType(e.target.value);
+      dispatch(setQuestion({ ...question, type: e.target.value }));
+      dispatch(setQuestion({ ...question, options: [] }));
+    }}
+  >
+    <option value="MultipleChoice">Multiple Choice</option>
+    <option value="TrueFalse">True/False</option>
+    <option value="FillBlank">Fill in the Blank</option>
+  </select>
+  <span className="float-end" style={{ fontSize: "20px", fontWeight: "bold", marginRight: "10px", marginLeft: "550px" }}>
+    pts:
+  </span>
+  <input
+    value={question.points}
+    onChange={(e) => {
+      dispatch(setQuestion({ ...question, points: e.target.value }));
+    }}
+    className="form-control"
+    style={{ width: "50px" }}
+    type="number"
+  />
+</div>
+
       <hr />
       <p>
         Enter your question text, then define all possible correct answers for
