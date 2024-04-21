@@ -14,6 +14,7 @@ import {
 } from "../reducer";
 import Quiz from "../..";
 import * as client from "../client";
+import * as questionsClient from "./Questions/client";
 import { Button } from "react-bootstrap";
 
 
@@ -26,12 +27,19 @@ function QuizEditor() {
       (state: KanbasState) => state.quizReducer.quiz
     );
 
-    const handleSave = () => {
+    const questionList = useSelector(
+      (state: KanbasState) => state.questionsReducer.questions
+    );
+
+    const handleSave = async () => {
         console.log("Actually saving assignment TBD in later assignments");
-        handleUpdate();
+        //handleUpdate();
+        await updateQuestions();
         navigate(`/Kanbas/Courses/${courseId}/quizzes`);
-        
-        
+      };
+
+      const updateQuestions = async () => {
+        const res = await questionsClient.updateAllQuestions(quizId, questionList);
       };
 
       const handleSaveAndPublish = () => {

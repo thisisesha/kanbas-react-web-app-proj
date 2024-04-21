@@ -34,3 +34,9 @@ export const findQuestionById = async (questionId: string) => {
   const response = await axios.get(`${QUIZZES_API}/questions/${questionId}`);
   return response.data;
 };
+
+export const updateAllQuestions = async (quizId: string | undefined, questions: any[]) => {
+  console.log("Updating All Questions", questions);
+  const response = await axios.put(`${QUIZZES_API}/${quizId}/updateAllQuestions`, questions);
+  return response.data;
+}
