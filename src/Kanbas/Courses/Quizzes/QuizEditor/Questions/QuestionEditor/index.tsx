@@ -37,7 +37,7 @@ function QuestionEditor() {
   const updateQuestion = async () => {
     console.log("Updating Question", question);
     var response = await client.updateQuestion(question);
-    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/questions`);
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/QuizEditor/questions`);
     //navigate back to the question list
   };
 

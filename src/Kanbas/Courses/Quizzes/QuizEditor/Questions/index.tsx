@@ -27,7 +27,7 @@ function QuizQuestion() {
     const res = await client.createQuestion(quizId, newReq);
     dispatch(setQuestion(res));
     dispatch(setQuestions([...questionList, res]));
-    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/questions/${res._id}`);
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/QuizEditor/questions/${res._id}`);
   };
 
   const assignQues = (ques: any) => {
