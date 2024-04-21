@@ -47,8 +47,8 @@ const initialState = {
 
     accessCode: "",
     dueDate: new Date().toISOString().slice(0, 10),
-    availableFromDate: new Date().toISOString().slice(0, 16),
-    availableUntilDate: new Date().toISOString().slice(0, 16),
+    availableFromDate: new Date().toISOString().slice(0, 10),
+    availableUntilDate: new Date().toISOString().slice(0, 10),
     course: "-1",
     published: false,
   },
