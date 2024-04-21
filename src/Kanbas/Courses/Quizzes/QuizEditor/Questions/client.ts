@@ -20,7 +20,8 @@ export const createQuestion = async (
 };
 
 export const updateQuestion = async (question: any) => {
-  const response = await axios.put(`${QUIZZES_API}/${question._id}`, question);
+  console.log("Updating Question", question);
+  const response = await axios.put(`${QUIZZES_API}/questions/${question._id}`, question);
   return response.data;
 };
 
