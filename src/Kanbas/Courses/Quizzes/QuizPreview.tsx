@@ -133,8 +133,7 @@ function QuizPreview() {
                 </p>
                 <hr />
                 <div className="form-check">
-                  {(question?.type === "MultipleChoice" ||
-                    question?.type === "TrueFalse") &&
+                  {(question?.type === "MultipleChoice") &&
                     question?.options.map((option: { _id: string, id: string, option: string }, index: number) => (
                       <div key={option._id}>
                         <input
@@ -151,7 +150,36 @@ function QuizPreview() {
                         <hr></hr>
                       </div>
                     ))}
-
+                  {(question?.type === "TrueFalse") && (
+                    <>
+                      <div>
+                        <input
+                          type="radio"
+                          id={`true-${question._id}`}
+                          name={`answer-${question._id}`}
+                          checked={selectedOptions[question._id] === "True"}
+                          onChange={() => handleOptionChange(question._id, "True")}
+                        />
+                        <label htmlFor={`true-${question._id}`}>
+                          True
+                        </label>
+                      </div>
+                      <hr></hr>
+                      <div>
+                        <input
+                          type="radio"
+                          id={`false-${question._id}`}
+                          name={`answer-${question._id}`}
+                          checked={selectedOptions[question._id] === "False"}
+                          onChange={() => handleOptionChange(question._id, "False")}
+                        />
+                        <label htmlFor={`false-${question._id}`}>
+                          False
+                        </label>
+                      </div>
+                      <hr></hr>
+                    </>
+                  )}
                   {question?.type === "FillBlank" && (
                     <div>
                       <input
