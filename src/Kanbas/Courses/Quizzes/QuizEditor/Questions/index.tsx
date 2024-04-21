@@ -41,14 +41,37 @@ function QuizQuestion() {
 
   return (
     <div>
-      <h2>Hello from Questions</h2>
-      {questionList.map((question) => (
-        <div key={question._id}>
-          <Link to={`${question._id}`} onClick={()=>{assignQues(question)}}>
-            {question.title}
-          </Link>
-        </div>
-      ))}
+      <div style={{ paddingRight: "40px", paddingLeft: "40px", paddingTop: "10px" }}>
+        {questionList?.length === 0 || questionList === null ? (
+          <div className="card text-muted" style={{ marginBottom: "20px" }}>
+            <div className="text-center">
+              <br />
+              No questions available.
+              <br /><br />
+            </div>
+          </div>
+        ) : (
+          <div>
+            {questionList.map((question, index) => (
+            <div key={question?._id} className="card" style={{ marginBottom: "20px" }}>
+              <div className="card-header" style={{ fontWeight: "bold", display: "flex", justifyContent: "space-between" }}>
+                <Link to={`${question._id}`} onClick={()=>{assignQues(question)}}>
+                  <span>{question?.title}</span>
+                  </Link>
+                <span>
+                  {question?.points} pts
+                </span>
+              </div>
+              <div className="card-body">
+                <p className="card-text">
+                  <div dangerouslySetInnerHTML={{ __html: question?.question }} />
+                </p>
+              </div>
+            </div>
+            ))}
+          </div>
+        )}
+      </div>
 
         <Button onClick={addQuestion}
           className="btn"

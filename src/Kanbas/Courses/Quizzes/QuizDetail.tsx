@@ -53,7 +53,7 @@ function QuizDetail() {
         </Link>
 
         <Link
-          to={`/Kanbas/Courses/${courseId}/Quizzes/QuizEditor`}
+          to={`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/QuizEditor`}
           style={{ backgroundColor: "#d3d3d3", color: "black" }}
           className="btn btn-secondary btn-md ps-2 ms-2"
           role="button"
