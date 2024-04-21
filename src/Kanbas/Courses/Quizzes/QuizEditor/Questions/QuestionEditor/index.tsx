@@ -4,14 +4,17 @@ import MultipleChoiceQuestion from "./MultipleChoiceQuestion";
 import FillInTheBlank from "./FillInTheBlank";
 import TrueFalse from "./TrueFalse";
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { setQuestions, setQuestion, addOption } from "../reducer";
 import { KanbasState } from "../../../../../store";
+import * as client from "../client";
 
 function QuestionEditor() {
-  
+  const navigate = useNavigate();
+  const { courseId, quizId } = useParams();
+
   const dispatch = useDispatch();
   const [questionType, setQuestionType] = useState("MultipleChoice");
   const [currentQuestionType, setCurrentQuestionType] = useState(<></>);
@@ -25,12 +28,18 @@ function QuestionEditor() {
     checkType();
   }, [questionType]);
 
-
   useEffect(() => {
     console.log("Question Updated", question);
     setQuestionType(question.type);
     checkType();
   }, []);
+
+  const updateQuestion = async () => {
+    console.log("Updating Question", question);
+    var response = await client.updateQuestion(question);
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/questions`);
+    //navigate back to the question list
+  };
 
   const checkType = () => {
     let temp = <></>;
@@ -39,7 +48,6 @@ function QuestionEditor() {
     } else if (questionType.includes("TrueFalse")) {
       temp = <TrueFalse />;
     } else {
-      console.log("Fill in the Blank Question");
       temp = <FillInTheBlank />;
     }
     setCurrentQuestionType(temp);
@@ -78,7 +86,9 @@ function QuestionEditor() {
           pts:
           <input
             value={question.points}
-            onChange={(e) => {dispatch(setQuestion({ ...question, points: e.target.value }))}}
+            onChange={(e) => {
+              dispatch(setQuestion({ ...question, points: e.target.value }));
+            }}
             className="form ms-1"
             style={{ width: "50px" }}
             type="number"
@@ -96,17 +106,25 @@ function QuestionEditor() {
       <h2>Question:</h2>
       <TextBox />
       {currentQuestionType}
-      <div className="float-end me-2">
-        <Button type="button" onClick={()=>dispatch(addOption())} style={{ color: "red", textDecoration: "none" }} className="btn btn-link">
-
-        <FaPlus className="me-2" style={{ color: "red" }} />
-          Add Another Answer
-        </Button>
-      </div>
+      {!questionType.includes("TrueFalse") && (
+        <div className="float-end me-2">
+          <Button
+            type="button"
+            onClick={() => dispatch(addOption("Empty Option"))}
+            style={{ color: "red", textDecoration: "none" }}
+            className="btn btn-link"
+          >
+            <FaPlus className="me-2" style={{ color: "red" }} />
+            Add Another Answer
+          </Button>
+        </div>
+      )}
 
       <br />
       <Button className="btn btn-secondary">Cancel</Button>
-      <Button className="btn btn-danger ms-2">Update Question</Button>
+      <Button onClick={() => updateQuestion()} className="btn btn-danger ms-2">
+        Update Question
+      </Button>
     </div>
   );
 }
