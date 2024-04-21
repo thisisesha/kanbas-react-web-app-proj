@@ -33,7 +33,7 @@ function QuizEditor() {
 
     const handleSave = async () => {
         console.log("Actually saving assignment TBD in later assignments");
-        //handleUpdate();
+        handleUpdate();
         await updateQuestions();
         navigate(`/Kanbas/Courses/${courseId}/quizzes`);
       };
