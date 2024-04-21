@@ -7,7 +7,7 @@ import { Button } from "react-bootstrap";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { setQuestions, setQuestion, addOption } from "../reducer";
+import { setQuestions, setQuestion, addOption, updateQuestion } from "../reducer";
 import { KanbasState } from "../../../../../store";
 import * as client from "../client";
 
@@ -34,10 +34,10 @@ function QuestionEditor() {
     checkType();
   }, []);
 
-  const updateQuestion = async () => {
-    console.log("Updating Question", question);
-    var response = await client.updateQuestion(question);
-    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/questions`);
+  const updateQues = () => {
+    dispatch(updateQuestion(question));
+    //var response = await client.updateQuestion(question);
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/QuizEditor/questions`);
     //navigate back to the question list
   };
 
@@ -122,7 +122,7 @@ function QuestionEditor() {
 
       <br />
       <Button className="btn btn-secondary">Cancel</Button>
-      <Button onClick={() => updateQuestion()} className="btn btn-danger ms-2">
+      <Button onClick={() => updateQues()} className="btn btn-danger ms-2">
         Update Question
       </Button>
     </div>

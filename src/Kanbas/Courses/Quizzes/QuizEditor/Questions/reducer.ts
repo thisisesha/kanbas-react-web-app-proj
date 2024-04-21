@@ -7,6 +7,7 @@ interface Option {
 }
 
 interface Question {
+  id: string;
   _id: string;
   title: string;
   points: number;
@@ -21,6 +22,7 @@ const initialState = {
   question: {
     title: "New Question",
     points: 0,
+    id: "",
     question: "",
     type: "MultipleChoice",
     quizId: "",
@@ -38,13 +40,12 @@ const questionsSlice = createSlice({
 
     deleteQuestion: (state, action) => {
       state.questions = state.questions.filter(
-        (question) => question._id !== action.payload
+        (question) => question.id !== action.payload
       );
     },
     updateQuestion: (state, action) => {
-      console.log("Updating Question", action.payload);
       state.questions = state.questions.map((question) => {
-        if (question._id === action.payload._id) {
+        if (question.id === action.payload.id) {
           return action.payload;
         } else {
           return question;
@@ -65,15 +66,15 @@ const questionsSlice = createSlice({
 
     addOption: (state,action) => {
       const temp = {id: new Date().getTime().toString(), option: action.payload};
+      console.log("Adding Option", state.question.options);
+      if(state.question.options === undefined){
+        state.question.options = [];
+      }
       state.question.options = [...state.question.options, temp];
     },
 
-    
-
     updateOption: (state, action) => {
-      console.log("Updating Option", action.payload);
       state.question.options = state.question.options.map((option) => {
-        console.log("Option", option);
         if (option.id === action.payload.id) {
           return action.payload;
         } else {

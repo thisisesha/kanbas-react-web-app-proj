@@ -2,9 +2,10 @@ import { Button } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as client from "./client";
 import { useEffect } from "react";
-import { setQuestions, setQuestion, resetQuestion } from "./reducer";
+import { setQuestions, setQuestion, resetQuestion, deleteQuestion } from "./reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../../../store";
+import { BsTrash3Fill } from "react-icons/bs";
 
 function QuizQuestion() {
   const navigate = useNavigate();
@@ -18,22 +19,19 @@ function QuizQuestion() {
   );
   const addQuestion = async () => {
     const newReq = {
+      id: new Date().getTime().toString(),
       title: "New Question",
       quizId: quizId,
       points: 0,
       type: "MultipleChoice",
-      option:[]
+      option: [],
     };
-    const res = await client.createQuestion(quizId, newReq);
-    dispatch(setQuestion(res));
-    dispatch(setQuestions([...questionList, res]));
-    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/questions/${res._id}`);
-  };
-
-  const assignQues = (ques: any) => {
-    console.log("Assigning Question ", ques);
-    dispatch(setQuestion(ques));
-    console.log("Question ", question);
+    //const res = await client.createQuestion(quizId, newReq);
+    dispatch(setQuestion(newReq));
+    dispatch(setQuestions([...questionList, newReq]));
+    navigate(
+      `/Kanbas/Courses/${courseId}/Quizzes/${quizId}/QuizEditor/questions/${newReq.id}`
+    );
   };
 
   useEffect(() => {
@@ -41,38 +39,74 @@ function QuizQuestion() {
       const questions = await client.getAllQuestions(quizId);
       dispatch(setQuestions(questions));
     };
-    fetchQuestions();
+    if (questionList.length === 0 || questionList === null) {
+      fetchQuestions();
+    }
   }, [quizId]);
+
+  const assignQues = (ques: any) => {
+    console.log("Assigning Question ", ques);
+    dispatch(setQuestion(ques));
+    console.log("Question ", question);
+  };
 
   return (
     <div>
-      <div style={{ paddingRight: "40px", paddingLeft: "40px", paddingTop: "10px" }}>
+      <div
+        style={{
+          paddingRight: "40px",
+          paddingLeft: "40px",
+          paddingTop: "10px",
+        }}
+      >
         {questionList?.length === 0 || questionList === null ? (
           <div className="card text-muted" style={{ marginBottom: "20px" }}>
             <div className="text-center">
               <br />
               No questions available.
-              <br /><br />
+              <br />
+              <br />
             </div>
           </div>
         ) : (
           <div>
             {questionList.map((question, index) => (
-            <div key={question?._id} className="card" style={{ marginBottom: "20px" }}>
-              <div className="card-header" style={{ fontWeight: "bold", display: "flex", justifyContent: "space-between" }}>
-                <Link to={`${question._id}`} onClick={()=>{assignQues(question)}}>
-                  <span>{question?.title}</span>
+              <div
+                key={question?._id}
+                className="card"
+                style={{ marginBottom: "20px" }}
+              >
+                <div
+                  className="card-header"
+                  style={{
+                    fontWeight: "bold",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Link
+                    to={`${question._id}`}
+                    onClick={() => {
+                      assignQues(question);
+                    }}
+                  >
+                    <span>{question?.title}</span>
                   </Link>
-                <span>
-                  {question?.points} pts
-                </span>
+                  <div>
+                    <span>{question?.points} pts</span>
+                    <button onClick={() => dispatch(deleteQuestion(question.id))} className="btn">
+                      <BsTrash3Fill color="red" />
+                    </button>
+                  </div>
+                </div>
+                <div className="card-body">
+                  <p className="card-text">
+                    <div
+                      dangerouslySetInnerHTML={{ __html: question?.question }}
+                    />
+                  </p>
+                </div>
               </div>
-              <div className="card-body">
-                <p className="card-text">
-                  <div dangerouslySetInnerHTML={{ __html: question?.question }} />
-                </p>
-              </div>
-            </div>
             ))}
           </div>
         )}

@@ -4,7 +4,9 @@ import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../store";
 import { setQuiz, updateQuiz } from "./reducer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import * as client from "./QuizEditor/Questions/client";
+import { setQuestions } from "./QuizEditor/Questions/reducer";
 
 function QuizDetail() {
   const { courseId } = useParams();
@@ -18,6 +20,15 @@ function QuizDetail() {
   const quizList = useSelector(
     (state: KanbasState) => state.quizReducer.quizzes
   );
+
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      const questions = await client.getAllQuestions(quizId);
+      dispatch(setQuestions(questions));
+    };
+    fetchQuestions();
+  }, [quizId]);
 
   const handleTogglePublish = () => {
     // Toggle the published status
