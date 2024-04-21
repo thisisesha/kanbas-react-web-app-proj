@@ -114,7 +114,7 @@ function QuizList() {
                       onClick={(e) => dispatch(setQuiz(quiz))}
                       style={{ color: "green", textDecoration: "none" }}
                       className="fw-bold ps-0"
-                      to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz._id}`}
+                      to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz._id}/QuizDetail`}
                     >
                       {/* Q1 - HTML */}
                       {quiz.title}

@@ -1,9 +1,10 @@
 import { FaCheckCircle, FaEllipsisV, FaPencilAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./index.css";
 
 function QuizDetail() {
-  return (
+  const {courseId, quizId} = useParams();
+   return (
     <div className="flex-fill">
       <div className="d-flex justify-content-end">
         <Link
@@ -16,7 +17,7 @@ function QuizDetail() {
         </Link>
 
         <Link
-          to={"#"}
+          to={`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/QuizPreview`}
           style={{ backgroundColor: "#d3d3d3", color: "black" }}
           className="btn btn-secondary btn-md ps-2 ms-2"
         >
@@ -24,7 +25,7 @@ function QuizDetail() {
         </Link>
 
         <Link
-          to={"#"}
+          to={`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/QuizEditor`}
           style={{ backgroundColor: "#d3d3d3", color: "black" }}
           className="btn btn-secondary btn-md ps-2 ms-2"
           role="button"
