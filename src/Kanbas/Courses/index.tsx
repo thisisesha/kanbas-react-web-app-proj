@@ -23,6 +23,8 @@ import QuizEditor from "./Quizzes/QuizEditor";
 import QuestionEditor from "./Quizzes/QuizEditor/Questions/QuestionEditor";
 import Quizzes from "./Quizzes";
 import Details from "./Quizzes/QuizEditor/Details";
+import QuizPreview from "./Quizzes/QuizPreview";
+import QuizDetail from "./Quizzes/QuizDetail";
 
 function Courses() {
   const { courseId } = useParams();
@@ -119,9 +121,10 @@ function Courses() {
             <Route path="Grades" element={<Grades />} />
             <Route path="Zoom Meetings" element={<h1>Zoom Meetings</h1>} />
             <Route path="Quizzes" element={<Quiz />} />
-            <Route path="Quizzes/:quizId/*" element={<QuizEditor/>} />
+            <Route path="Quizzes/QuizEditor" element={<QuizEditor/>} />
+            <Route path="Quizzes/:quizId" element={<QuizDetail/>} />
             <Route path="Quizzes/:quizId/questions/:questionId" element={<QuestionEditor/>} />
-
+            <Route path="Quizzes/:quizId/QuizPreview" element={<QuizPreview/>} />
             <Route path="Quizzes" element={<Details />} />
             <Route path="People" element={<h1>People</h1>} />
             <Route path="Panopto Video" element={<h1>Panopto Video</h1>} />

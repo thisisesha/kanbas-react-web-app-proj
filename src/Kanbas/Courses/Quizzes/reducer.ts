@@ -5,54 +5,52 @@ interface Quiz {
   availability: string;
   points: string;
   dueDate: string;
-  id: string;
+  _id: string;
   quizType: string;
   assignmentGroup: string;
 
-  
-    shuffleAnswers:boolean;
-    timeLimit: String;
-    multipleAttempts: boolean;
-    correctAnswers: boolean;
-    oneQuestion: boolean;
-    webcam: boolean;
-    lockQuestion: boolean;
-  
+  shuffleAnswers: boolean;
+  timeLimit: String;
+  multipleAttempts: boolean;
+  correctAnswers: boolean;
+  oneQuestion: boolean;
+  webcam: boolean;
+  lockQuestion: boolean;
 
-  accessCode:String;
- 
+  accessCode: String;
 
   numberOfQuestions: string;
   availableFromDate: string;
   availableUntilDate: string;
   course: String;
-
+  published: Boolean;
 }
 const initialState = {
   quizzes: [] as Quiz[],
   quiz: {
     title: "Unnamed Quiz",
     availability: "",
-    description:"",
+    description: "",
     numberOfQuestions: "",
-    id: "-1",
+    _id: "-1",
     points: "100",
     quizType: "Graded Quiz",
     assignmentGroup: "Quizzes",
-    
-      shuffleAnswers:true,
-      timeLimit: "20",
-      multipleAttempts: false,
-      correctAnswers: true,
-      oneQuestion: true,
-      webcam: false,
-      lockQuestion: false,
-    
-    accessCode:"",
-    dueDate: new Date().toISOString().slice(0, 16).split("T")[0],
-    availableFromDate: new Date().toISOString().slice(0, 16).split("T")[0],
-    availableUntilDate: new Date().toISOString().slice(0, 16).split("T")[0],
+
+    shuffleAnswers: true,
+    timeLimit: "20",
+    multipleAttempts: false,
+    correctAnswers: true,
+    oneQuestion: true,
+    webcam: false,
+    lockQuestion: false,
+
+    accessCode: "",
+    dueDate: new Date().toISOString().slice(0, 10),
+    availableFromDate: new Date().toISOString().slice(0, 10),
+    availableUntilDate: new Date().toISOString().slice(0, 10),
     course: "-1",
+    published: false,
   },
 };
 const quizzesSlice = createSlice({
@@ -66,8 +64,10 @@ const quizzesSlice = createSlice({
 
     updateQuiz: (state, action) => {
       state.quizzes = state.quizzes.map((quiz) => {
-        if (quiz.id === action.payload._id) {
-          return action.payload;
+        if (quiz?._id === action.payload._id) {
+          console.log(quiz._id);
+          console.log(action.payload);
+          return { ...quiz, ...action.payload };
         } else {
           return quiz;
         }
@@ -76,7 +76,7 @@ const quizzesSlice = createSlice({
 
     deleteQuiz: (state, action) => {
       state.quizzes = state.quizzes.filter(
-        (quiz) => quiz.id !== action.payload
+        (quiz) => quiz._id !== action.payload
       );
     },
 
