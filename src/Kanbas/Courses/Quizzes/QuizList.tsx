@@ -60,7 +60,7 @@ function QuizList() {
     navigate(`/Kanbas/Courses/${courseId}/Quizzes/QuizEditor`);
   };
 
-  const handleTogglePublish = (qz:any) => {
+  const handleTogglePublish = (qz: any) => {
     // Toggle the published status
     dispatch(
       updateQuiz({
@@ -156,46 +156,72 @@ function QuizList() {
                     {quiz.published ? (
                       <FaCheckCircle
                         className="ms-4"
-                        style={{ color: "green", cursor: "pointer", verticalAlign: "middle" }}
+                        style={{
+                          color: "green",
+                          cursor: "pointer",
+                          verticalAlign: "middle",
+                          marginTop: "5px",
+                        }}
                         onClick={() => handleTogglePublish(quiz)}
                       />
                     ) : (
                       <FaBan
                         className="ms-4"
-                        style={{ color: "red", cursor: "pointer", verticalAlign: "middle" }}
+                        style={{
+                          color: "red",
+                          cursor: "pointer",
+                          verticalAlign: "middle",
+                          marginTop: "5px",
+                        }}
                         onClick={() => handleTogglePublish(quiz)}
                       />
                     )}
 
-                    <a>
-                      <FaEllipsisV
-                        className="ms-4"
-                        role="button"
-                        style={{ verticalAlign: "middle" }}
-                        onClick={toggleMenu}
-                      />
-                    </a>
-                    {menuVisible && (
-                      <div
-                        className="menu"
-                        onChange={() => setMenuVisible(false)}
-                      >
-                        <option onClick={handleEditQuiz}>Edit</option>
-                        <option
-                          onClick={() => {
-                            if (handleDelete()) {
-                              handleDeleteQuiz(quiz._id);
-                            }
-                          }}
-                        >
-                          Delete
-                        </option>
-                        <option onClick={()=>handleTogglePublish(quiz)}>
-                          {quiz.published ? "Unpublish" : "Publish"}{" "}
-                          {/* Toggle the description based on the published status */}
-                        </option>
-                      </div>
-                    )}
+                    <div
+                      className="dropdown"
+                      style={{ position: "relative", display: "inline-block" }}
+                    >
+                      <a>
+                        <FaEllipsisV
+                          className="ms-4"
+                          role="button"
+                          style={{ verticalAlign: "middle" }}
+                          onClick={toggleMenu}
+                        />
+                        {menuVisible && (
+                          <div
+                            className="menu"
+                            style={{
+                              position: "absolute",
+                              top: "100%",
+                              left: "-50%",
+                              border: "1px solid #ccc",
+                              borderRadius: "4px",
+                              backgroundColor: "white",
+                              padding: "8px",
+                              opacity: 0.9,
+                            }}
+                          >
+                            <option onClick={handleEditQuiz}>Edit</option>
+                            <option
+                              onClick={() => {
+                                if (handleDelete()) {
+                                  handleDeleteQuiz(quiz._id);
+                                }
+                              }}
+                            >
+                              Delete
+                            </option>
+                            <option onClick={() => handleTogglePublish(quiz)}>
+                              {quiz.published ? "Unpublish" : "Publish"}{" "}
+                              {/* Toggle the description based on the published status */}
+                            </option>
+                          </div>
+                        )}
+                      </a>
+                    </div>
+
+                    <div className="dropdown"></div>
                   </div>
                 </div>
               </li>

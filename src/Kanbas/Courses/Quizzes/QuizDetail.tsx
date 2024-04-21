@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../store";
-import { setQuiz } from "./reducer";
+import { setQuiz, updateQuiz } from "./reducer";
 import { useState } from "react";
 
 function QuizDetail() {
@@ -21,8 +21,14 @@ function QuizDetail() {
 
   const handleTogglePublish = () => {
     // Toggle the published status
-    setPublished((prevPublished) => !prevPublished);
+    dispatch(
+      updateQuiz({
+        ...quiz,
+        published: !quiz.published,
+      })
+    );
     console.log("Publishing or Unpublishing the quiz");
+    console.log(quiz.published);
   };
 
   return (
