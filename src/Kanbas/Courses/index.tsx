@@ -121,11 +121,10 @@ function Courses() {
             <Route path="Grades" element={<Grades />} />
             <Route path="Zoom Meetings" element={<h1>Zoom Meetings</h1>} />
             <Route path="Quizzes" element={<Quiz />} />
-            <Route path="Quizzes/QuizEditor" element={<QuizEditor/>} />
+            <Route path="Quizzes/:quizId/QuizEditor/*" element={<QuizEditor/>} />
+            <Route path="Quizzes/:quizId/QuizEditor/questions/:questionId" element={<QuestionEditor/>} />
             <Route path="Quizzes/:quizId" element={<QuizDetail/>} />
-            <Route path="Quizzes/:quizId/questions/:questionId" element={<QuestionEditor/>} />
             <Route path="Quizzes/:quizId/QuizPreview" element={<QuizPreview/>} />
-            <Route path="Quizzes" element={<Details />} />
             <Route path="People" element={<h1>People</h1>} />
             <Route path="Panopto Video" element={<h1>Panopto Video</h1>} />
             <Route path="Pages" element={<h1>Pages</h1>} />
