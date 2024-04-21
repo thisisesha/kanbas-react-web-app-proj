@@ -40,8 +40,8 @@ function QuizDetail() {
           className="btn btn-secondary btn-md ps-2 ms-2"
           onClick={handleTogglePublish}
         >
-          {quiz.published ? "Unpublish" : "Publish"}{" "}
-          {quiz.published ? <FaBan /> : <FaCheckCircle />}
+          {quizList[0]?.published ? "Unpublish" : "Publish"}{" "}
+          {quizList[0]?.published ? <FaBan /> : <FaCheckCircle />}
         </Link>
 
         <Link
@@ -85,14 +85,6 @@ function QuizDetail() {
           <b>Quiz Type</b>
         </div>
         <div className="col-sm-1 col-md-2">
-       
-          {/* <select className="form-control mb-2"
-           onChange={(e) => setQuiz({ ...quiz, quizType: e.target.value })}>
-            <option value="GRADED_QUIZ">Graded Quiz</option>
-            <option value="PRACTICE_QUIZ">Practice Quiz</option>
-            <option value="GRADED_SURVEY">Graded Survey</option>
-            <option value="UNGRADED_SURVEY">Ungraded Survey</option>
-          </select> */}
           {quiz.quizType}
         
         </div>
