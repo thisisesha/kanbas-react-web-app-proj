@@ -82,6 +82,26 @@ function QuizList() {
     });
   }, [courseId]);
 
+  const handleDueDate = (qz : any) => {
+    if (qz.dueDate && qz.dueDate !== "") {
+      qz.dueDate = new Date(qz.dueDate)
+        .toISOString()
+        .split("T")[0];
+    }
+    if (qz.availableFromDate && qz.availableFromDate !== "") {
+      qz.availableFromDate = new Date(qz.availableFromDate)
+        .toISOString()
+        .split("T")[0];
+    }
+    if (qz.availableUntilDate && qz.availableUntilDate !== "") {
+      qz.availableUntilDate = new Date(qz.availableUntilDate)
+        .toISOString()
+        .split("T")[0];
+    }
+    return qz.dueDate;
+  }
+
+
   return (
     <div className="col me-2">
       <div className="row wd-margin-top">
